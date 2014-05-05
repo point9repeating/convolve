@@ -102,7 +102,14 @@ Filter.prototype.apply = function(input, result){
 
       for (var cy = 0; cy < w; ++cy) {
         for (var cx = 0; cx < h; ++cx) {
-          var cpx = ((y + (cy - half)) * width + (x + (cx - half))) * 4;
+          var scx = x + cx - half;
+          var scy = y + cy - half;
+          //extend edge handling
+          if(scx < 0) scx = 0;
+          if(scx >= width) scx = width - 1;
+          if(scy < 0) scy = 0;
+          if(scy >= height) scy = height - 1;
+          var cpx = (scy * width + scx) * 4;
           r += data[cpx + 0] * matrix[cy][cx];
           g += data[cpx + 1] * matrix[cy][cx];
           b += data[cpx + 2] * matrix[cy][cx];
